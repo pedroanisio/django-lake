@@ -1,0 +1,6 @@
+services:
+  web:
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=True
