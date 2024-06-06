@@ -4,3 +4,4 @@ services:
       - .:/code
     environment:
       - DEBUG=True
+      - ALLOWED_HOSTS=*

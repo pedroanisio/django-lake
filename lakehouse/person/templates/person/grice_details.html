@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Herbert Paul Grice Details</title>
+</head>
+<body>
+    <h1>{{ person.full_name }}</h1>
+    
+    <h2>Aliases</h2>
+    <ul>
+        {% for alias in aliases %}
+            <li>{{ alias.alias_name }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Locations</h2>
+    <ul>
+        {% for location in locations %}
+            <li>{{ location.location_name }}{% if location.parent_location %} (Parent: {{ location.parent_location.location_name }}){% endif %}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Events</h2>
+    <ul>
+        {% for event in events %}
+            <li>{{ event.event_name }} - {{ event.location.location_name }}
+                {% if event.start_date %} ({{ event.start_date }}{% if event.end_date %} to {{ event.end_date }}{% endif %}){% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Publications</h2>
+    <ul>
+        {% for publication in publications %}
+            <li>{{ publication.publication_name }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Concepts</h2>
+    <ul>
+        {% for concept in concepts %}
+            <li>{{ concept.name }}: {{ concept.description }} (Field: {{ concept.field }})</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Contributions</h2>
+    <ul>
+        {% for contribution in contributions %}
+            <li>{{ contribution.concept.name }}: {{ contribution.contribution_detail }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Relationships</h2>
+    <ul>
+        {% for relationship in detailed_relationships %}
+            <li>{{ relationship.relationship_type.name }}: {{ relationship.target.name }} - {{ relationship.description }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Verbs</h2>
+    {% for verb in verbs %}
+        <h3>{{ verb.verb_name }}</h3>
+        
+        <h4>Persons</h4>
+        <ul>
+            {% for p in verb.persons.all %}
+                <li>{{ p.full_name }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h4>Events</h4>
+        <ul>
+            {% for event in verb.events.all %}
+                <li>{{ event.event_name }} - {{ event.location.location_name }}
+                    {% if event.start_date %} ({{ event.start_date }}{% if event.end_date %} to {{ event.end_date }}{% endif %}){% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <h4>Contributions</h4>
+        <ul>
+            {% for contribution in verb.contributions.all %}
+                <li>{{ contribution.concept.name }}: {{ contribution.contribution_detail }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h4>Detailed Relationships</h4>
+        <ul>
+            {% for relationship in verb.detailed_relationships.all %}
+                <li>{{ relationship.relationship_type.name }}: {{ relationship.target.name }} - {{ relationship.description }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
